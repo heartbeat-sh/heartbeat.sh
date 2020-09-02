@@ -2,7 +2,7 @@
 A shell script client for [heartbeat.sh](https://heartbeat.sh)
 
 ## Usage
-To set up the environment for the heartbeat script, run `source setup.sh your-subdomain`. You might want to add this line to your profile.
+To set up the environment for the heartbeat script, run `source setup.sh {your-subdomain}`. You might want to add this line to your profile.
 
 If you've run the setup, you can send heartbeats to heartbeat.sh with `./heartbeat.sh name [warning-timeout] [error-timeout]`.
 

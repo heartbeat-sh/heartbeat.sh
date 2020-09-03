@@ -13,14 +13,6 @@ then
   exit 1
 fi
 
-PROTO=https
-HOST=heartbeat.sh
-if [[ $DEBUG ]]
-then
-  PROTO=http
-  HOST=localhost:8123
-fi
-
 QUERY=""
 if [[ $2 ]]
 then
@@ -31,6 +23,6 @@ then
   QUERY="$QUERY&error=$3"
 fi
 
-URL="$PROTO://$HAAS_SUBDOMAIN.$HOST/beat/$1$QUERY"
+URL="https://$HAAS_SUBDOMAIN.heartbeat.sh/beat/$1$QUERY"
 
 curl -X POST "$URL"

@@ -9,20 +9,48 @@ fi
 
 if [[ -z $1 ]]
 then
-  echo "Usage: ./heartbeat.sh name [warning-timeout] [error-timeout]"
+  echo "Usage: ./heartbeat.sh name [options]"
   exit 1
 fi
+name=$1
+shift
 
-QUERY=""
-if [[ $2 ]]
+warning=
+error=
+method="POST"
+while [[ $1 ]]; do
+  case $1 in
+    -w | --warning )
+      shift
+      warning=$1
+      ;;
+    -e | --error )
+      shift
+      error=$1
+      ;;
+    -d | --delete )
+      method="DELETE"
+      ;;
+  esac
+  shift
+done
+
+query=""
+if [[ $warning ]]
 then
-  QUERY="?warning=$2"
+  query="?warning=$warning"
 fi
-if [[ $3 ]]
+if [[ $error ]]
 then
-  QUERY="$QUERY&error=$3"
+  if [[ $query ]]
+  then
+    query="${query}&"
+  else
+    query="?"
+  fi
+  query="${query}error=$error"
 fi
 
-URL="https://$HAAS_SUBDOMAIN.heartbeat.sh/beat/$1$QUERY"
+url="https://${HAAS_SUBDOMAIN}.heartbeat.sh/beat/${name}${query}"
 
-curl -X POST "$URL"
+curl -X "$method" "$url"

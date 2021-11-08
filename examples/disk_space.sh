@@ -23,5 +23,5 @@ done
 
 if [[ "$(df | awk '$6 == "/" {gsub(/%/, "", $5); print $5}')" -lt "$usage" ]]
 then
-  ../heartbeat.sh "$name" -w "$((interval + 1))"m -e "$((interval * 2))"m
+  ../heartbeat.sh "$name" -w $((interval + 1))m -e $((interval * 2))m
 fi
